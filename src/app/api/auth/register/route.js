@@ -1,13 +1,13 @@
-import UserModel from '@/api/user/model'
+import UserModel from '@/models/user.model'
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
-import {connection} from '@/utils/db'
+import connection from '@/ultils/db'
 
 
 export async function POST(request) {
-    console.log('request', request)
     try {
         const { name, email, password } = await request.json();
+        console.log({name, email, password })
         if (!name || !email || !password) {
             return NextResponse.json({ message: "Preencha todos os campos" });
         }

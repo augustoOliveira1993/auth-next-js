@@ -1,8 +1,7 @@
-export default function Contato() {
+export default function Sobre() {
     return (
-        <main>
-            <h1>Contato</h1>
-            <p>Entre em contato conosco</p>
+        <main className="min-h-screen flex justify-center pt-6">
+            <h1>Sobre</h1>
         </main>
     )
 }
