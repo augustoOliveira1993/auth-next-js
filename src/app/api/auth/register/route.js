@@ -7,7 +7,6 @@ import connection from '@/ultils/db'
 export async function POST(request) {
     try {
         const { name, email, password } = await request.json();
-        console.log({name, email, password })
         if (!name || !email || !password) {
             return NextResponse.json({ message: "Preencha todos os campos" });
         }

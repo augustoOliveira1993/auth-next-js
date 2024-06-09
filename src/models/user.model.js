@@ -17,11 +17,15 @@ const userSchema = new Schema(
             type: String,
             required: true,
         },
+        permissions: {
+            type: [String],
+            default: [],
+        },
     },
     {
         timestamp: true
     });
 
-const modelName = mongoose.models.User || mongoose.model("User", userSchema);
+const modelUser = mongoose.models.User || mongoose.model("User", userSchema);
 
-export default modelName;
+export default modelUser;
