@@ -20,13 +20,13 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en">
-        <AuthProvider>
-            <body className={poppins.className}>
-                <Header />
+            <html lang="en">
+            <AuthProvider>
+                <body className={poppins.className}>
+                <Header/>
                 {children}
-            </body>
-        </AuthProvider>
-        </html>
+                </body>
+            </AuthProvider>
+            </html>
     );
 }

@@ -1,66 +1,30 @@
 'use client'
 import React from 'react';
-import {Bar, Cell, ComposedChart, Legend, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis,} from 'recharts';
+import {Bar, Cell, ComposedChart, Legend, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis,BarChart, CartesianGrid, LabelList} from 'recharts';
 
 export default function CustosDas() {
     const gerencias = [
-        {
-            title: "ALTOS FORNOS",
-            totalBudget: "1.988.425,28",
-            totalSpent: "2.194.435,11",
-            balance: "-278.586,46",
-            status: "Bloqueio",
-        },
-        {
-            title: "ACIARIA",
-            totalBudget: "3.716.590,00",
-            totalSpent: "4.095.407,50",
-            balance: "-589.945,28",
-            status: "Bloqueio",
-        },
-        {
-            title: "LAMINAÇÃO",
-            totalBudget: "2.011.262,57",
-            totalSpent: "2.065.123,28",
-            balance: "-151.296,20",
-            status: "Bloqueio",
-        },
-        {
-            title: "TREFILA",
-            totalBudget: "385.000,00",
-            totalSpent: "393.575,80",
-            balance: "-24.721,50",
-            status: "Bloqueio",
-        },
-        {
-            title: "ALTOS FORNOS",
-            totalBudget: "1.988.425,28",
-            totalSpent: "2.194.435,11",
-            balance: "-278.586,46",
-            status: "Sem verba",
-        },
-        {
-            title: "ACIARIA",
-            totalBudget: "3.716.590,00",
-            totalSpent: "4.095.407,50",
-            balance: "-589.945,28",
-            status: "TESTE",
-        },
-        {
-            title: "LAMINAÇÃO",
-            totalBudget: "2.011.262,57",
-            totalSpent: "2.065.123,28",
-            balance: "-151.296,20",
-            status: "Alerta",
-        },
-        {
-            title: "TREFILA",
-            totalBudget: "385.000,00",
-            totalSpent: "393.575,80",
-            balance: "-24.721,50",
-            status: "Verba ativa",
-        },
-    ];
+            { pacote: 'TI / COMUNICAÇÃO', total_orc_pacote: 12589 },
+            { pacote: 'MATERIAIS APLICADOS', total_orc_pacote: 59863 },
+            { pacote: 'OFICINA DE CILINDROS', total_orc_pacote: 0 },
+            { pacote: 'PESSOAL', total_orc_pacote: 54200 },
+            { pacote: 'SESMT', total_orc_pacote: 79863 },
+            { pacote: 'COMBUSTÍVEL E LUBRIFICANTE', total_orc_pacote: 0 },
+            { pacote: 'TRANSPORTE', total_orc_pacote: 0 },
+            { pacote: 'MANUTENÇÃO', total_orc_pacote: 12450 },
+            { pacote: 'INFRAESTRUTURA', total_orc_pacote: 0 },
+            { pacote: 'MATERIAL DE CONSUMO', total_orc_pacote: 0 },
+            { pacote: 'SERVIÇOS DE TERCEIROS', total_orc_pacote: 85990 },
+            { pacote: 'VIAGENS', total_orc_pacote: 0 },
+            { pacote: 'DISTRIBUIÇÃO E LOGÍSTICA', total_orc_pacote: 0 },
+            { pacote: 'UTILIDADES', total_orc_pacote: 0 },
+            { pacote: 'ANUIDADE/PUBLICIDADE/SEGUROS', total_orc_pacote: 78540 },
+            { pacote: 'MÁQUINAS E EQUIPAMENTOS', total_orc_pacote: 0 },
+            { pacote: 'SUCATA', total_orc_pacote: 0 },
+            { pacote: 'JURÍDICO', total_orc_pacote: 0 },
+            { pacote: 'MARKETING E VENDAS', total_orc_pacote: 0 }
+        ]
+    ;
 
     const resolverStatus = (status) => {
         switch (status) {
@@ -110,6 +74,12 @@ export default function CustosDas() {
         );
     };
 
+    const formatYAxis = (tickItem) => {
+        if (tickItem >= 1000) {
+            return `${Math.round(tickItem / 1000)}mil`;
+        }
+        return tickItem;
+    };
 
     return (
         <div className="container mx-auto p-4">
@@ -138,52 +108,17 @@ export default function CustosDas() {
                         {/*        <p className="text-lg font-bold">{item.balance}</p>*/}
                         {/*    </div>*/}
                         {/*</div>*/}
-                        <div className="w-full h-40">
+                        <div className="w-full h-80">
                             <ResponsiveContainer width="100%" height="100%">
-                                <ComposedChart
-                                    layout="vertical"
-                                    data={data}
-                                >
-                                    <XAxis
-                                        height={10}
-                                        width={1}
-                                        tick={false}
-                                        tickLine={false}
-                                        axisLine={false}
-                                        type="number"/>
-                                    <YAxis
-                                        height={10}
-                                        width={80}
-                                        tick={false}
-                                        tickLine={false}
-                                        axisLine={false}
-                                        dataKey="title" type="category" scale="band"/>
-                                    <Tooltip/>
-                                    <Legend/>
-                                    <Bar dataKey="saldo" barSize={15} fill="green" stackId="a"/>
-                                    <Bar dataKey="realizado" barSize={15} fill="red" stackId="a"/>
-                                </ComposedChart>
-                            </ResponsiveContainer>
-                        </div>
-                        <div className="w-full h-44">
-                            <ResponsiveContainer>
-                                <PieChart>
-                                    <Pie
-                                        data={dataPier}
-                                        cx="50%"
-                                        cy="50%"
-                                        labelLine={false}
-                                        label={renderCustomizedLabel}
-                                        outerRadius={80}
-                                        fill="#8884d8"
-                                        dataKey="value"
-                                    >
-                                        {dataPier.map((entry, index) => (
-                                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]}/>
-                                        ))}
-                                    </Pie>
-                                    <Tooltip/>
-                                </PieChart>
+                                <BarChart width={730} height={250} data={gerencias}>
+                                    <CartesianGrid strokeDasharray="3 3" />
+                                    <YAxis tickFormatter={formatYAxis} />
+                                    <Tooltip />
+                                    <Legend />
+                                    <Bar dataKey="total_orc_pacote" fill="#8884d8">
+                                        <LabelList dataKey="total_orc_pacote" position="top" formatter={(value) => value>0 ? formatYAxis(value) : ''} />
+                                    </Bar>
+                                </BarChart>
                             </ResponsiveContainer>
                         </div>
                     </div>
